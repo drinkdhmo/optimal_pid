@@ -25,4 +25,4 @@ class VTOLController:
         F = F_tilde + P.Fe
         theta_ref = self.zCtrl.PID(z_r, z, flag=False)
         tau = self.thetaCtrl.PID(theta_ref, theta, flag=False)
-        return np.array([[F], [tau]])
+        return np.array([F, tau])

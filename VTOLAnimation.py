@@ -61,7 +61,7 @@ class VTOLAnimation:
             [x1, y1]]).T
         R = np.array([[np.cos(theta), np.sin(theta)],
                        [-np.sin(theta), np.cos(theta)]])
-        pts = R*pts
+        pts = R@pts
         pts = pts + np.matlib.repmat(np.array([[z],[h]]), 1, pts.shape[1])
         xy = np.array(pts.T)
 
