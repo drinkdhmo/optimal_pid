@@ -2,7 +2,10 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
 import numpy.matlib
-import VTOLParam as P
+
+from importlib import reload
+import VTOLParam as Param
+reload(Param)
 
 
 class VTOLAnimation:
@@ -15,8 +18,8 @@ class VTOLAnimation:
         self.handle = []                      # Initializes a list object that will
                                               # be used to contain handles to the
                                               # patches and line objects.
-        plt.plot([0.0, P.length], [0.0, 0.0], 'k')    # Draw a base line
-        plt.axis([-P.length / 5, P.length + P.length / 5, -P.length/5, P.length+P.length/5])  # Change the x,y axis limits
+        plt.plot([0.0, Param.length], [0.0, 0.0], 'k')    # Draw a base line
+        plt.axis([-Param.length / 5, Param.length + Param.length / 5, -Param.length/5, Param.length+Param.length/5])  # Change the x,y axis limits
 
     def drawVTOL(self, x, target):
         # Process inputs to function

@@ -1,6 +1,10 @@
 import numpy as np
 import random
-import VTOLParam as P
+
+from importlib import reload
+
+import VTOLParam as Param
+reload(Param)
 
 
 class VTOLDynamics:
@@ -10,12 +14,12 @@ class VTOLDynamics:
 
     def __init__(self):
         # Initial state conditions
-        self.state = np.array([[P.z0],          # initial lateral position
-                                [P.h0],          # initial altitude
-                                [P.theta0],      # initial roll angle
-                                [P.zdot0],       # initial lateral velocity
-                                [P.hdot0],       # initial climb rate
-                                [P.thetadot0]])  # initial angular velocity
+        self.state = np.array([[Param.z0],          # initial lateral position
+                                [Param.h0],          # initial altitude
+                                [Param.theta0],      # initial roll angle
+                                [Param.zdot0],       # initial lateral velocity
+                                [Param.hdot0],       # initial climb rate
+                                [Param.thetadot0]])  # initial angular velocity
         #################################################
         # The parameters for any physical system are never known exactly.  Feedback
         # systems need to be designed to be robust to this uncertainty.  In the simulation
@@ -24,25 +28,25 @@ class VTOLDynamics:
         # may change by up to 20%.  A different parameter value is chosen every time the simulation
         # is run.
         alpha = 0.2  # Uncertainty parameter
-        self.mc = P.mc * (1+2*alpha*np.random.rand()-alpha)
-        self.mr = P.mr * (1+2*alpha*np.random.rand()-alpha)
-        self.Jc = P.Jc * (1+2*alpha*np.random.rand()-alpha)
-        self.d = P.d * (1+2*alpha*np.random.rand()-alpha)
-        self.mu = P.mu * (1+2*alpha*np.random.rand()-alpha)
-        self.F_wind = P.F_wind * (1+2*alpha*np.random.rand()-alpha)
+        self.mc = Param.mc * (1+2*alpha*np.random.rand()-alpha)
+        self.mr = Param.mr * (1+2*alpha*np.random.rand()-alpha)
+        self.Jc = Param.Jc * (1+2*alpha*np.random.rand()-alpha)
+        self.arm = Param.arm * (1+2*alpha*np.random.rand()-alpha)
+        self.mu = Param.mu * (1+2*alpha*np.random.rand()-alpha)
+        self.F_wind = Param.F_wind * (1+2*alpha*np.random.rand()-alpha)
 
     def propagateDynamics(self, u):
         '''
             Integrate the differential equations defining dynamics
-            P.Ts is the time step between function calls.
+            Param.Ts is the time step between function calls.
             u contains the system input(s).
         '''
         # Integrate ODE using Runge-Kutta RK4 algorithm
         k1 = self.derivatives(self.state, u)
-        k2 = self.derivatives(self.state + P.Ts/2*k1, u)
-        k3 = self.derivatives(self.state + P.Ts/2*k2, u)
-        k4 = self.derivatives(self.state + P.Ts*k3, u)
-        self.state += P.Ts/6 * (k1 + 2*k2 + 2*k3 + k4)
+        k2 = self.derivatives(self.state + Param.Ts/2*k1, u)
+        k3 = self.derivatives(self.state + Param.Ts/2*k2, u)
+        k4 = self.derivatives(self.state + Param.Ts*k3, u)
+        self.state += Param.Ts/6 * (k1 + 2*k2 + 2*k3 + k4)
 
     def derivatives(self, state, u):
         '''
@@ -59,8 +63,8 @@ class VTOLDynamics:
         fl = u[1]
         # The equations of motion.
         zddot = (-(fr + fl) * np.sin(theta) + self.F_wind) / (self.mc + 2.0*self.mr)
-        hddot = (-(self.mc + 2.0*self.mr) * P.g + (fr + fl) * np.cos(theta)) / (self.mc + 2.0*self.mr)
-        thetaddot = self.d * (fr - fl) / (self.Jc + 2.0*self.mr*(self.d**2))
+        hddot = (-(self.mc + 2.0*self.mr) * Param.gravity + (fr + fl) * np.cos(theta)) / (self.mc + 2.0*self.mr)
+        thetaddot = self.arm * (fr - fl) / (self.Jc + 2.0*self.mr*(self.arm**2))
         # build xdot and return
         xdot = np.array([[zdot], [hdot], [thetadot], [zddot], [hddot], [thetaddot]])
         return xdot
