@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import numpy as np
 
@@ -6,7 +6,7 @@ plt.ion()  # enable interactive drawing
 
 
 class plotData:
-    ''' 
+    '''
         This class plots the time histories for the pendulum data.
     '''
 
@@ -36,12 +36,12 @@ class plotData:
         self.handle.append(myPlot(self.ax[3], ylabel='force(N)'))
         self.handle.append(myPlot(self.ax[4], xlabel='t(s)', ylabel='torque(Nm)'))
 
-    def updatePlots(self, t, states, z_ref, h_ref, force, torque):
+    def updatePlots(self, tt, states, z_ref, h_ref, force, torque):
         '''
             Add to the time and data histories, and update the plots.
         '''
         # update the time history of all plot variables
-        self.time_history.append(t)  # time
+        self.time_history.append(tt)  # time
         self.zref_history.append(z_ref)  # reference position
         self.z_history.append(states[0])  # position
         self.href_history.append(h_ref)  # reference position
@@ -59,7 +59,7 @@ class plotData:
 
 
 class myPlot:
-    ''' 
+    '''
         Create each individual subplot.
     '''
     def __init__(self, ax,
@@ -67,12 +67,12 @@ class myPlot:
                  ylabel='',
                  title='',
                  legend=None):
-        ''' 
+        '''
             ax - This is a handle to the  axes of the figure
             xlable - Label of the x-axis
             ylable - Label of the y-axis
             title - Plot title
-            legend - A tuple of strings that identify the data. 
+            legend - A tuple of strings that identify the data.
                      EX: ("data1","data2", ... , "dataN")
         '''
         self.legend = legend
@@ -96,12 +96,12 @@ class myPlot:
         self.ax.grid(True)
 
         # Keeps track of initialization
-        self.init = True   
+        self.init = True
 
     def updatePlot(self, time, data):
-        ''' 
-            Adds data to the plot.  
-            time is a list, 
+        '''
+            Adds data to the plot.
+            time is a list,
             data is a list of lists, each list corresponding to a line on the plot
         '''
         if self.init == True:  # Initialize the plot the first time routine is called
@@ -126,5 +126,3 @@ class myPlot:
         # Adjusts the axis to fit all of the data
         self.ax.relim()
         self.ax.autoscale()
-           
-

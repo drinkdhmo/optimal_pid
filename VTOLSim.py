@@ -33,21 +33,21 @@ h_reference = signalGenerator(amplitude=3.0, frequency=0.03)
 dataPlot = plotData()
 animation = VTOLAnimation()
 
-t = Param.t_start  # time starts at t_start
-while t < Param.t_end:  # main simulation loop
+tt = Param.t_start  # time starts at t_start
+while tt < Param.t_end:  # main simulation loop
     # Get referenced inputs from signal generators
-    z_ref = 5.0 + z_reference.square(t)[0]
-    h_ref = 5.0 + h_reference.square(t)[0]
+    z_ref = 5.0 + z_reference.square(tt)[0]
+    h_ref = 5.0 + h_reference.square(tt)[0]
     # Propagate dynamics in between plot samples
-    t_next_plot = t + Param.t_plot
-    while t < t_next_plot: # updates control and dynamics at faster simulation rate
+    t_next_plot = tt + Param.t_plot
+    while tt < t_next_plot: # updates control and dynamics at faster simulation rate
         ref = np.array([[z_ref], [h_ref]])
         u = ctrl.u(ref, VTOL.outputs())  # Calculate the control value
         VTOL.propagateDynamics(Param.mixing@u)  # Propagate the dynamics
-        t = t + Param.Ts  # advance time by Ts
+        tt = tt + Param.Ts  # advance time by Ts
     # update animation and data plots
     animation.drawVTOL(VTOL.states(), z_ref)
-    dataPlot.updatePlots(t, VTOL.states(), z_ref, h_ref, u[0], u[1])
+    dataPlot.updatePlots(tt, VTOL.states(), z_ref, h_ref, u[0], u[1])
     plt.pause(0.0001)  # the pause causes the figure to be displayed during the simulation
 
 # Keeps the program from closing until the user presses a button.
