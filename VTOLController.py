@@ -3,10 +3,8 @@ import numpy as np
 from importlib import reload
 
 import VTOLParam as Param
-import VTOLParamHW10 as P10
 import PIDControl
 reload(Param)
-reload(P10)
 reload(PIDControl)
 
 from PIDControl import PIDControl
@@ -18,13 +16,13 @@ class VTOLController:
     '''
 
     def __init__(self):
-        self.zCtrl = PIDControl(P10.kp_z, P10.ki_z, P10.kd_z, Param.fmax, Param.beta, Param.Ts)
-        self.hCtrl = PIDControl(P10.kp_h, P10.ki_h, P10.kd_h, Param.fmax, Param.beta, Param.Ts)
-        self.thetaCtrl = PIDControl(P10.kp_th, 0.0, P10.kd_th, Param.fmax, Param.beta, Param.Ts)
+        self.zCtrl = PIDControl(Param.kp_z, Param.ki_z, Param.kd_z, Param.fmax, Param.beta, Param.Ts)
+        self.hCtrl = PIDControl(Param.kp_h, Param.ki_h, Param.kd_h, Param.fmax, Param.beta, Param.Ts)
+        self.thetaCtrl = PIDControl(Param.kp_th, 0.0, Param.kd_th, Param.fmax, Param.beta, Param.Ts)
 
-    def u(self, r, y):
-        z_r = float(r[0])
-        h_r = float(r[1])
+    def uu(self, r, y):
+        z_r = r[0]
+        h_r = r[1]
         z = y[0]
         h = y[1]
         theta = y[2]

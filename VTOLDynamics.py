@@ -27,7 +27,7 @@ class VTOLDynamics:
         # that represents alpha*100 % of the parameter, i.e., alpha = 0.2, means that the parameter
         # may change by up to 20%.  A different parameter value is chosen every time the simulation
         # is run.
-        alpha = 0.2  # Uncertainty parameter
+        alpha = 0.  # Uncertainty parameter
         self.mc = Param.mc * (1+2*alpha*np.random.rand()-alpha)
         self.mr = Param.mr * (1+2*alpha*np.random.rand()-alpha)
         self.Jc = Param.Jc * (1+2*alpha*np.random.rand()-alpha)
