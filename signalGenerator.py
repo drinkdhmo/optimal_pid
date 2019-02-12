@@ -21,21 +21,27 @@ class signalGenerator:
             out = self.amplitude + self.y_offset
         else:
             out = - self.amplitude + self.y_offset
-        return [out]
+        return out
         #  returns a list of length 1
 
+    def square_batch(self, tt):
+        out = np.zeros_like(tt) - self.amplitude + self.y_offset
+        out[tt % (1.0/self.frequency) <= 0.5/self.frequency] = self.amplitude + self.y_offset
+        return out
+        #
+    #
     def sawtooth(self, tt):
         tmp = tt % (0.5/self.frequency)
         out = 4*self.amplitude*self.frequency*tmp - self.amplitude + self.y_offset
-        return [out]
+        return out
         #  returns a list of length 1
 
     def random(self, tt):
         out = np.sqrt(self.amplitude)*np.random.rand() + self.y_offset
-        return [out]
+        return out
         #  returns a list of length 1
 
     def sin(self, tt):
         out = self.amplitude*np.sin(2*np.pi*self.frequency*tt) + self.y_offset
-        return [out]
+        return out
         #  returns a list of length 1

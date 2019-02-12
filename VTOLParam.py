@@ -81,13 +81,13 @@ wn_z     = 2.2/tr_z
 kp_z   = wn_z**2.0/b1
 kd_z   = (2.0*zeta_z*wn_z-a1)/b1
 
-print('kp_z: ', kp_z)
-print('ki_z: ', ki_z)
-print('kd_z: ', kd_z)
-print('kp_h: ', kp_h)
-print('ki_z: ', ki_h)
-print('kd_h: ', kd_h)
-print('kp_th: ', kp_th)
-print('kd_th: ', kd_th)
+# print('kp_z: ', kp_z)
+# print('ki_z: ', ki_z)
+# print('kd_z: ', kd_z)
+# print('kp_h: ', kp_h)
+# print('ki_z: ', ki_h)
+# print('kd_h: ', kd_h)
+# print('kp_th: ', kp_th)
+# print('kd_th: ', kd_th)
 
 #
