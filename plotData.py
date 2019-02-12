@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
-import numpy as np
+import autograd.numpy as np
 
 plt.ion()  # enable interactive drawing
 

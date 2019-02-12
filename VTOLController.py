@@ -1,4 +1,4 @@
-import numpy as np
+import autograd.numpy as np
 
 from importlib import reload
 
@@ -15,10 +15,10 @@ class VTOLController:
         This class inherits other controllers in order to organize multiple controllers.
     '''
 
-    def __init__(self):
-        self.zCtrl = PIDControl(Param.kp_z, Param.ki_z, Param.kd_z, Param.fmax, Param.beta, Param.Ts)
-        self.hCtrl = PIDControl(Param.kp_h, Param.ki_h, Param.kd_h, Param.fmax, Param.beta, Param.Ts)
-        self.thetaCtrl = PIDControl(Param.kp_th, 0.0, Param.kd_th, Param.fmax, Param.beta, Param.Ts)
+    def __init__(self, gains):
+        self.zCtrl = PIDControl(gains.kp_z, gains.ki_z, gains.kd_z, Param.fmax, Param.beta, Param.Ts)
+        self.hCtrl = PIDControl(gains.kp_h, gains.ki_h, gains.kd_h, Param.fmax, Param.beta, Param.Ts)
+        self.thetaCtrl = PIDControl(gains.kp_th, 0.0, gains.kd_th, Param.fmax, Param.beta, Param.Ts)
 
     def uu(self, r, y):
         z_r = r[0]

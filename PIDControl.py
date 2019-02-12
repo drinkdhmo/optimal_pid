@@ -1,4 +1,4 @@
-import numpy as np
+import autograd.numpy as np
 
 class PIDControl:
     def __init__(self, kp, ki, kd, limit, beta, Ts):
@@ -21,7 +21,7 @@ class PIDControl:
 
             if flag==True, then returns
                 u = kp*error + ki*integral(error) + kd*error_dot.
-            else returns 
+            else returns
                 u = kp*error + ki*integral(error) - kd*y_dot.
 
             error_dot and y_dot are computed numerically using a dirty derivative
@@ -50,12 +50,12 @@ class PIDControl:
     def PD(self, y_r, y, flag=True):
         '''
             PD control,
-            
+
             if flag==True, then returns
                 u = kp*error + kd*error_dot.
-            else returns 
+            else returns
                 u = kp*error - kd*y_dot.
-            
+
             error_dot and y_dot are computed numerically using a dirty derivative
         '''
 
@@ -103,10 +103,3 @@ class PIDControl:
         if abs(u) > self.limit:
             u = self.limit*np.sign(u)
         return u
-
-
-
-
-
-
-

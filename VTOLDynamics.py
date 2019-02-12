@@ -1,4 +1,4 @@
-import numpy as np
+import autograd.numpy as np
 import random
 
 from importlib import reload
@@ -53,12 +53,12 @@ class VTOLDynamics:
             Return xdot = f(x,u), the derivatives of the continuous states, as a matrix
         '''
         # re-label states and inputs for readability
-        z = state.item(0)
-        h = state.item(1)
-        theta = state.item(2)
-        zdot = state.item(3)
-        hdot = state.item(4)
-        thetadot = state.item(5)
+        z = state[0]
+        h = state[1]
+        theta = state[2]
+        zdot = state[3]
+        hdot = state[4]
+        thetadot = state[5]
         fr = u[0]
         fl = u[1]
         # The equations of motion.
@@ -77,9 +77,9 @@ class VTOLDynamics:
             [z, h, theta] with added Gaussian noise
         '''
         # re-label states for readability
-        z = self.state.item(0)
-        h = self.state.item(1)
-        theta = self.state.item(2)
+        z = self.state[0]
+        h = self.state[1]
+        theta = self.state[2]
         # add Gaussian noise to outputs
         z_m = z + random.gauss(0, 0.001)
         h_m = h + random.gauss(0, 0.001)
@@ -91,4 +91,4 @@ class VTOLDynamics:
         '''
             Returns all current states as a list
         '''
-        return self.state.tolist()
+        return self.state

@@ -1,5 +1,5 @@
 # VTOL Parameter File
-import numpy as np
+import autograd.numpy as np
 # import control as cnt
 
 # Physical parameters of the  VTOL known to the controller
