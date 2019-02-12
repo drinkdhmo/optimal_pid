@@ -43,8 +43,8 @@ while t < Param.t_end:  # main simulation loop
     while t < t_next_plot: # updates control and dynamics at faster simulation rate
         ref = np.array([[z_ref], [h_ref]])
         u = ctrl.u(ref, VTOL.outputs())  # Calculate the control value
-        VTOL.propagateDynamics(P.mixing@u)  # Propagate the dynamics
-        t = t + P.Ts  # advance time by Ts
+        VTOL.propagateDynamics(Param.mixing@u)  # Propagate the dynamics
+        t = t + Param.Ts  # advance time by Ts
     # update animation and data plots
     animation.drawVTOL(VTOL.states(), z_ref)
     dataPlot.updatePlots(t, VTOL.states(), z_ref, h_ref, u[0], u[1])

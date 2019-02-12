@@ -14,12 +14,12 @@ class VTOLDynamics:
 
     def __init__(self):
         # Initial state conditions
-        self.state = np.array([P.z0,          # initial lateral position
-                               P.h0,          # initial altitude
-                               P.theta0,      # initial roll angle
-                               P.zdot0,       # initial lateral velocity
-                               P.hdot0,       # initial climb rate
-                               P.thetadot0])  # initial angular velocity
+        self.state = np.array([Param.z0,          # initial lateral position
+                               Param.h0,          # initial altitude
+                               Param.theta0,      # initial roll angle
+                               Param.zdot0,       # initial lateral velocity
+                               Param.hdot0,       # initial climb rate
+                               Param.thetadot0])  # initial angular velocity
         #################################################
         # The parameters for any physical system are never known exactly.  Feedback
         # systems need to be designed to be robust to this uncertainty.  In the simulation
