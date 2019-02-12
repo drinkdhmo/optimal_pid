@@ -37,6 +37,8 @@ class Gains:
         self.kd_h = kd_h
         self.kp_th = kp_th
         self.kd_th = kd_th
+
+        # self.pids = kp_z
 #
 
 def set_col(my_eye, A, b, ii):
@@ -44,6 +46,7 @@ def set_col(my_eye, A, b, ii):
     select = my_eye[ii, :]
     # select = np.hstack((np.zeros(nrows,ii-1), np.ones(nrows, 1), np.zeros(nrows, ncols-ii)))
     A = A + select[None,:]*b[:, None]
+    return A
 
 def simulate(kp_z, ki_z, kd_z, kp_h, ki_h, kd_h, kp_th, kd_th):
     gains = Gains(kp_z, ki_z, kd_z, kp_h, ki_h, kd_h, kp_th, kd_th)
@@ -67,8 +70,9 @@ def simulate(kp_z, ki_z, kd_z, kp_h, ki_h, kd_h, kp_th, kd_th):
     for ii, tt in enumerate(t_span):
         uu = ctrl.uu(ref_hist[:,ii], VTOL.outputs())  # Calculate the control value
         VTOL.propagateDynamics(np.dot(Param.mixing, uu))  # Propagate the dynamics
-        set_col(my_eye, uu_hist, uu, ii)
-        set_col(my_eye, state_hist, VTOL.states(), ii)
+        uu_hist = set_col(my_eye, uu_hist, uu, ii)
+        state_hist = set_col(my_eye, state_hist, VTOL.states(), ii)
+        # set_trace()
         # uu_hist[:,ii] = uu
         # state_hist[:,ii] = VTOL.states()
 
@@ -76,7 +80,15 @@ def simulate(kp_z, ki_z, kd_z, kp_h, ki_h, kd_h, kp_th, kd_th):
     #
 #
 # set_trace()
-def obj_fun(kp_z, ki_z, kd_z, kp_h, ki_h, kd_h, kp_th, kd_th):
+def obj_fun( pids ):
+    kp_z = pids[0]
+    ki_z = pids[1]
+    kd_z = pids[2]
+    kp_h = pids[3]
+    ki_h = pids[4]
+    kd_h = pids[5]
+    kp_th = pids[6]
+    kd_th = pids[7]
     t_span, state_hist, ref_hist, uu_hist = simulate(kp_z, ki_z, kd_z,
                                                      kp_h, ki_h, kd_h,
                                                      kp_th, kd_th)
