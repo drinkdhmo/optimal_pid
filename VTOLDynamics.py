@@ -14,12 +14,12 @@ class VTOLDynamics:
 
     def __init__(self):
         # Initial state conditions
-        self.state = np.array([[Param.z0],          # initial lateral position
-                                [Param.h0],          # initial altitude
-                                [Param.theta0],      # initial roll angle
-                                [Param.zdot0],       # initial lateral velocity
-                                [Param.hdot0],       # initial climb rate
-                                [Param.thetadot0]])  # initial angular velocity
+        self.state = np.array([P.z0,          # initial lateral position
+                               P.h0,          # initial altitude
+                               P.theta0,      # initial roll angle
+                               P.zdot0,       # initial lateral velocity
+                               P.hdot0,       # initial climb rate
+                               P.thetadot0])  # initial angular velocity
         #################################################
         # The parameters for any physical system are never known exactly.  Feedback
         # systems need to be designed to be robust to this uncertainty.  In the simulation
@@ -66,7 +66,9 @@ class VTOLDynamics:
         hddot = (-(self.mc + 2.0*self.mr) * Param.gravity + (fr + fl) * np.cos(theta)) / (self.mc + 2.0*self.mr)
         thetaddot = self.arm * (fr - fl) / (self.Jc + 2.0*self.mr*(self.arm**2))
         # build xdot and return
-        xdot = np.array([[zdot], [hdot], [thetadot], [zddot], [hddot], [thetaddot]])
+        # xdot = np.array([[zdot], [hdot], [thetadot], [zddot], [hddot], [thetaddot]])
+        xdot = np.array([zdot, hdot, thetadot, zddot, hddot, thetaddot])
+        # pdb.set_trace()
         return xdot
 
     def outputs(self):
@@ -89,4 +91,4 @@ class VTOLDynamics:
         '''
             Returns all current states as a list
         '''
-        return self.state.T.tolist()[0]
+        return self.state.tolist()
