@@ -93,6 +93,7 @@ def obj_fun( pids ):
                                                      kp_h, ki_h, kd_h,
                                                      kp_th, kd_th)
     #
+    print(pids)
     cost = np.linalg.norm(state_hist[:2,:] - ref_hist)
     return cost
 #
@@ -111,3 +112,4 @@ def sim_and_plot():
     plt.close()
 
 #
+# print(pids)

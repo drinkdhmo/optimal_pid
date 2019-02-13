@@ -90,4 +90,26 @@ kd_z   = (2.0*zeta_z*wn_z-a1)/b1
 # print('kp_th: ', kp_th)
 # print('kd_th: ', kd_th)
 
+
+# ======================================
+# ======================================
+# ======================================
+
+nom_bount_tr = 3.0
+pm_bound_tr = 0.3
+
+nom_bount_zeta = 0.707
+pm_bound_zeta = 0.1
+
+lb_tr = nom_bount_tr - pm_bound_tr
+up_tr = nom_bount_tr + pm_bound_tr
+
+lb_tr_in = (nom_bount_tr - pm_bound_tr) * 0.1
+up_tr_in = (nom_bount_tr + pm_bound_tr) * 0.1
+
+
+lb_zeta = nom_bount_zeta - pm_bound_zeta
+ub_zeta = nom_bount_zeta + pm_bound_zeta
+
+
 #
