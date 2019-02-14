@@ -25,7 +25,7 @@ target0 = 0
 
 # Simulation Parameters
 t_start = 0.0  # Start time of simulation
-t_end = 5.0  # End time of simulation
+t_end = 15.0  # End time of simulation
 Ts = 0.01  # sample time for simulation
 t_plot = 0.1  # the plotting and animation is updated at this rate
 
@@ -85,7 +85,7 @@ kd_z   = (2.0*zeta_z*wn_z-a1)/b1
 # print('ki_z: ', ki_z)
 # print('kd_z: ', kd_z)
 # print('kp_h: ', kp_h)
-# print('ki_z: ', ki_h)
+# print('ki_h: ', ki_h)
 # print('kd_h: ', kd_h)
 # print('kp_th: ', kp_th)
 # print('kd_th: ', kd_th)
@@ -110,6 +110,18 @@ up_tr_in = (nom_bount_tr + pm_bound_tr) * 0.1
 
 lb_zeta = nom_bount_zeta - pm_bound_zeta
 ub_zeta = nom_bount_zeta + pm_bound_zeta
+
+
+# ======================================
+# Here are some gains produced from optimization
+# kp_z = -0.08458252
+# ki_z = 0.00279188
+# kd_z = -0.097039864
+# kp_h = 0.81365614
+# ki_h = 0.49991785
+# kd_h = 1.55309333
+# kp_th = 2.64621446
+# kd_th = 0.50842781
 
 
 #

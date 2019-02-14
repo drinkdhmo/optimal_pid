@@ -1,5 +1,5 @@
-from IPython.core.debugger import set_trace
-
+#from IPython.core.debugger import set_trace
+import pdb
 import autograd.numpy as np
 from autograd import grad
 import scipy.optimize
@@ -29,7 +29,8 @@ def rt_lon_cnstr(pids):
 #
 def rt_lat_cnstr(pids):
     kp_z = pids[0]
-    tr_z = -(2.2**2) / (Param.gravity * kp_z**2)
+    # tr_z = -(2.2**2) / (Param.gravity * kp_z**2)
+    tr_z = 2.2 / (-Param.gravity * kp_z)**0.5
     return tr_z
     #
 #
@@ -57,10 +58,22 @@ def zeta_th_cnstr(pids):
     return zeta_th
     #
 #
-ii = 0
-def iteration_callback():
-    ii += 1
-    print(f"I'm doing something, {ii}")
+def iteration_callback(xk, state):
+    # pdb.set_trace()
+    print("\n#############################################################")
+    print("Iteration: {}".format(state.nit))
+    print("cost: {}".format(state.fun))
+    print("x: {}".format(state.x))
+    print("constraints: {}".format(state.constr))
+    # print("success: {}".format(state.success))
+    print("status: {}".format(state.status))
+    # print("message: " + state.message)
+    print("gradient: {}".format(state.grad))
+    print("nfev: {}".format(state.nfev))
+    print("njev: {}".format(state.njev))
+    # print("max constraint violation: {}".format(state.maxcv))
+    print("#############################################################")
+    return False
     #
 #
 # ======================================
@@ -105,7 +118,7 @@ x0 = np.array([Param.kp_z, Param.ki_z, Param.kd_z,
                Param.kp_th, Param.kd_th])
 hess = scipy.optimize.BFGS(exception_strategy='skip_update')
 result = scipy.optimize.minimize(sim.obj_fun, x0, jac=grad(sim.obj_fun), hess=hess,
-                                 constraints=nonlcon, # callback=iteration_callback,
+                                 constraints=nonlcon, callback=iteration_callback,
                                  method='trust-constr')
 
 #

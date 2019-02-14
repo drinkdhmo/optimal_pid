@@ -1,4 +1,4 @@
-from IPython.core.debugger import set_trace
+#from IPython.core.debugger import set_trace
 
 import matplotlib.pyplot as plt
 import autograd.numpy as np
@@ -93,8 +93,10 @@ def obj_fun( pids ):
                                                      kp_h, ki_h, kd_h,
                                                      kp_th, kd_th)
     #
-    print(pids)
+
     cost = np.linalg.norm(state_hist[:2,:] - ref_hist)
+    # print("PIDS: {}".format(pids))
+    # print("Cost: {}".format(cost))
     return cost
 #
 def sim_and_plot():
