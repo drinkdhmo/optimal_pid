@@ -112,7 +112,7 @@ lb_zeta = nom_bount_zeta - pm_bound_zeta
 ub_zeta = nom_bount_zeta + pm_bound_zeta
 
 lb_motor = 1.0
-ub_motor = 20.0
+ub_motor = 10.0
 
 
 # ======================================
