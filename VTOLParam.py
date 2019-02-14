@@ -96,7 +96,7 @@ kd_z   = (2.0*zeta_z*wn_z-a1)/b1
 # ======================================
 
 nom_bount_tr = 3.0
-pm_bound_tr = 0.3
+pm_bound_tr = 1.0
 
 nom_bount_zeta = 0.707
 pm_bound_zeta = 0.1
@@ -110,6 +110,9 @@ up_tr_in = (nom_bount_tr + pm_bound_tr) * 0.1
 
 lb_zeta = nom_bount_zeta - pm_bound_zeta
 ub_zeta = nom_bount_zeta + pm_bound_zeta
+
+lb_motor = 1.0
+ub_motor = 20.0
 
 
 # ======================================
