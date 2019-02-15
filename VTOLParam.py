@@ -121,6 +121,16 @@ lb_motor = 1.0
 ub_motor = 12.0
 
 
+# gains for starting point for optimization
+kp_z = -4.e-02
+ki_z = 0
+kd_z = -2.e-02
+kp_h = 1.
+ki_h = .5
+kd_h = 1.
+kp_th = 4
+kd_th = .5
+
 # ======================================
 # Here are some gains produced from optimization
 # kp_z = -0.08458252
@@ -152,4 +162,12 @@ ub_motor = 12.0
 # kp_th = 1.37671667
 # kd_th = 0.47537903
 
-#
+# optimization with reference trajectory
+# kp_z = -3.31361911e-02
+# ki_z = 1.22433781e-03
+# kd_z = -7.50865036e-02
+# kp_h = 8.13247300e-01
+# ki_h = 4.99049275e-01
+# kd_h = 1.55233822e+00
+# kp_th = 2.57580208e+00
+# kd_th = 5.03389649e-01
