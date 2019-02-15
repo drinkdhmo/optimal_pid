@@ -120,9 +120,9 @@ nonlcon = []
 #                                                   Param.lb_tr_in, Param.up_tr_in,
 #                                                   grad(rt_th)))
 # #
-nonlcon.append(scipy.optimize.NonlinearConstraint(rt_th,
+nonlcon.append(scipy.optimize.NonlinearConstraint(rt_ratio,
                                                   Param.lb_tr_ratio, Param.ub_tr_ratio,
-                                                  grad(rt_th)))
+                                                  grad(rt_ratio)))
 #
 nonlcon.append(scipy.optimize.NonlinearConstraint(zeta_lon,
                                                   Param.lb_zeta, Param.ub_zeta,
