@@ -116,7 +116,7 @@ lb_zeta = nom_bount_zeta - pm_bound_zeta
 ub_zeta = nom_bount_zeta + pm_bound_zeta
 
 lb_motor = 1.0
-ub_motor = 10.0
+ub_motor = 12.0
 
 
 # ======================================
@@ -130,5 +130,24 @@ ub_motor = 10.0
 # kp_th = 2.64621446
 # kd_th = 0.50842781
 
+# another set
+# kp_z = -3.08925653e-02
+# ki_z = -2.31833170e-04
+# kd_z = -8.10501779e-02
+# kp_h = 4.53906692e-01
+# ki_h = 1.81925851e-01
+# kd_h = 1.33101872e+00
+# kp_th = 2.76221096e+00
+# kd_th = 4.75212000e-01
+
+# failed optimization from near zero gains
+kp_z = -0.03692478
+ki_z = -0.00841769
+kd_z = -0.08019474
+kp_h = 0.43178099
+ki_h = -0.05492341
+kd_h = 1.04734499
+kp_th = 1.37671667
+kd_th = 0.47537903
 
 #
