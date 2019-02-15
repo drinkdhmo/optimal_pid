@@ -111,6 +111,8 @@ up_tr = nom_bount_tr + pm_bound_tr
 lb_tr_in = (nom_bount_tr - pm_bound_tr) * 0.1
 up_tr_in = (nom_bount_tr + pm_bound_tr) * 0.1
 
+lb_tr_ratio = 8
+ub_tr_ratio = 100
 
 lb_zeta = nom_bount_zeta - pm_bound_zeta
 ub_zeta = nom_bount_zeta + pm_bound_zeta

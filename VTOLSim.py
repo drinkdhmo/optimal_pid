@@ -91,7 +91,9 @@ def sim_and_plot():
     dataPlot = plotData()
     target = np.array([[5+Param.z_step], [5+Param.h_step]])*(1 - np.exp(-t_span/Param.ref_tau))
     # dataPlot.batchUpdatePlots(t_span, state_hist, ref_hist[0], ref_hist[1], uu_hist[0], uu_hist[1])
-    dataPlot.batchUpdatePlots(t_span, state_hist, target[0], target[1], uu_hist[0], uu_hist[1])
+
+    motors = np.dot(Param.mixing, uu_hist)
+    dataPlot.batchUpdatePlots(t_span, state_hist, target[0], target[1], motors[0], motors[1])
 
     # Keeps the program from closing until the user presses a button.
     print('Press key to close')

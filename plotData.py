@@ -33,10 +33,10 @@ class plotData:
         self.handle.append(myPlot(self.ax[0], ylabel='z(m)', title='Planar VTOL'))
         self.handle.append(myPlot(self.ax[1], ylabel='h(m)'))
         self.handle.append(myPlot(self.ax[2], ylabel='theta(deg)'))
-        self.handle.append(myPlot(self.ax[3], ylabel='thrust(N)'))
-        self.handle.append(myPlot(self.ax[4], xlabel='t(s)', ylabel='torque(Nm)'))
+        self.handle.append(myPlot(self.ax[3], ylabel='fr(N)'))
+        self.handle.append(myPlot(self.ax[4], xlabel='t(s)', ylabel='fl(N)'))
 
-    def updatePlots(self, tt, states, z_ref, h_ref, force, torque):
+    def updatePlots(self, tt, states, z_ref, h_ref, thrust_right, thrust_left):
         '''
             Add to the time and data histories, and update the plots.
         '''
@@ -47,8 +47,8 @@ class plotData:
         self.href_history.append(h_ref)  # reference position
         self.h_history.append(states[1])  # position
         self.theta_history.append(180.0/np.pi*states[2])  # VTOL angle (converted to degrees)
-        self.Force_history.append(force)  # force
-        self.Torque_history.append(torque)  # torque
+        self.Force_history.append(thrust_right)  # thrust_right
+        self.Torque_history.append(thrust_left)  # thrust_left
 
         # update the plots with associated histories
         self.handle[0].updatePlot(self.time_history, [self.z_history, self.zref_history])
@@ -57,7 +57,7 @@ class plotData:
         self.handle[3].updatePlot(self.time_history, [self.Force_history])
         self.handle[4].updatePlot(self.time_history, [self.Torque_history])
 
-    def batchUpdatePlots(self, tt, states, z_ref, h_ref, force, torque):
+    def batchUpdatePlots(self, tt, states, z_ref, h_ref, thrust_right, thrust_left):
         '''
             Add to the time and data histories, and update the plots.
         '''
@@ -68,8 +68,8 @@ class plotData:
         self.href_history = h_ref  # reference position
         self.h_history = states[1]  # position
         self.theta_history = 180.0/np.pi*states[2]  # VTOL angle (converted to degrees)
-        self.Force_history = force  # force
-        self.Torque_history = torque  # torque
+        self.Force_history = thrust_right  # thrust_right
+        self.Torque_history = thrust_left  # thrust_left
 
         # update the plots with associated histories
         self.handle[0].updatePlot(self.time_history, [self.z_history, self.zref_history])
