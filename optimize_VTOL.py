@@ -151,11 +151,11 @@ def obj_fun( pids ):
     kd_h = pids[5]
     kp_th = pids[6]
     kd_th = pids[7]
-    t_span, state_hist, ref_hist, uu_hist = simulate(kp_z, ki_z, kd_z,
+    t_span, state_hist, ref_hist, uu_hist = sim.simulate(kp_z, ki_z, kd_z,
                                                      kp_h, ki_h, kd_h,
                                                      kp_th, kd_th)
     #
-    target = np.array([5+Param.z_step, 5+Param.h_step])*(1 - np.exp(-t_span/Param.ref_tau))
+    target = np.array([[5+Param.z_step], [5+Param.h_step]])*(1 - np.exp(-t_span/Param.ref_tau))
     # cost = np.linalg.norm(state_hist[:2,:] - ref_hist)
     cost = np.linalg.norm(state_hist[:2,:] - target)
     # print("PIDS: {}".format(pids))
@@ -167,7 +167,7 @@ x0 = np.array([Param.kp_z, Param.ki_z, Param.kd_z,
                Param.kp_h, Param.ki_h, Param.kd_h,
                Param.kp_th, Param.kd_th])
 hess = scipy.optimize.BFGS(exception_strategy='skip_update')
-result = scipy.optimize.minimize(sim.obj_fun, x0, jac=grad(sim.obj_fun), hess=hess,
+result = scipy.optimize.minimize(obj_fun, x0, jac=grad(obj_fun), hess=hess,
                                  constraints=nonlcon, callback=iteration_callback,
                                  method='trust-constr')
 
