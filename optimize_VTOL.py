@@ -129,17 +129,38 @@ nonlcon.append(scipy.optimize.NonlinearConstraint(zeta_th_cnstr,
                                                   Param.lb_zeta, Param.ub_zeta,
                                                   grad(zeta_th_cnstr)))
 #
+# ======================================
+# constrain each motor thrust, theta,
 nonlcon.append(scipy.optimize.NonlinearConstraint(motor_cnstr,
                                                   Param.lb_motor, Param.ub_motor,
                                                   jacobian(motor_cnstr)))
 #
 
 
+
 # ======================================
-# constrain each motor thrust, theta,
-
+# objective function
+# we want the aircraft to behave like a first order system
 #
-
+def obj_fun( pids ):
+    kp_z = pids[0]
+    ki_z = pids[1]
+    kd_z = pids[2]
+    kp_h = pids[3]
+    ki_h = pids[4]
+    kd_h = pids[5]
+    kp_th = pids[6]
+    kd_th = pids[7]
+    t_span, state_hist, ref_hist, uu_hist = simulate(kp_z, ki_z, kd_z,
+                                                     kp_h, ki_h, kd_h,
+                                                     kp_th, kd_th)
+    #
+    target = np.array([5+Param.z_step, 5+Param.h_step])*(1 - np.exp(-t_span/Param.ref_tau))
+    # cost = np.linalg.norm(state_hist[:2,:] - ref_hist)
+    cost = np.linalg.norm(state_hist[:2,:] - target)
+    # print("PIDS: {}".format(pids))
+    # print("Cost: {}".format(cost))
+    return cost
 
 # ======================================
 x0 = np.array([Param.kp_z, Param.ki_z, Param.kd_z,

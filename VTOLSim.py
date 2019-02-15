@@ -52,8 +52,8 @@ def simulate(kp_z, ki_z, kd_z, kp_h, ki_h, kd_h, kp_th, kd_th):
     gains = Gains(kp_z, ki_z, kd_z, kp_h, ki_h, kd_h, kp_th, kd_th)
     VTOL = VTOLDynamics()
     ctrl = VTOLController(gains)
-    z_reference = signalGenerator(amplitude=4.0, frequency=0.02)
-    h_reference = signalGenerator(amplitude=3.0, frequency=0.03)
+    z_reference = signalGenerator(amplitude=Param.z_step, frequency=0.02)
+    h_reference = signalGenerator(amplitude=Param.h_step, frequency=0.03)
 
     # instantiate the simulation plots and animation
     # dataPlot = plotData()
@@ -80,24 +80,7 @@ def simulate(kp_z, ki_z, kd_z, kp_h, ki_h, kd_h, kp_th, kd_th):
     #
 #
 # set_trace()
-def obj_fun( pids ):
-    kp_z = pids[0]
-    ki_z = pids[1]
-    kd_z = pids[2]
-    kp_h = pids[3]
-    ki_h = pids[4]
-    kd_h = pids[5]
-    kp_th = pids[6]
-    kd_th = pids[7]
-    t_span, state_hist, ref_hist, uu_hist = simulate(kp_z, ki_z, kd_z,
-                                                     kp_h, ki_h, kd_h,
-                                                     kp_th, kd_th)
-    #
 
-    cost = np.linalg.norm(state_hist[:2,:] - ref_hist)
-    # print("PIDS: {}".format(pids))
-    # print("Cost: {}".format(cost))
-    return cost
 #
 def sim_and_plot():
     t_span, state_hist, ref_hist, uu_hist = simulate(Param.kp_z, Param.ki_z, Param.kd_z,
@@ -106,7 +89,9 @@ def sim_and_plot():
     #
     print("Plotting...")
     dataPlot = plotData()
-    dataPlot.batchUpdatePlots(t_span, state_hist, ref_hist[0], ref_hist[1], uu_hist[0], uu_hist[1])
+    target = np.array([[5+Param.z_step], [5+Param.h_step]])*(1 - np.exp(-t_span/Param.ref_tau))
+    # dataPlot.batchUpdatePlots(t_span, state_hist, ref_hist[0], ref_hist[1], uu_hist[0], uu_hist[1])
+    dataPlot.batchUpdatePlots(t_span, state_hist, target[0], target[1], uu_hist[0], uu_hist[1])
 
     # Keeps the program from closing until the user presses a button.
     print('Press key to close')
