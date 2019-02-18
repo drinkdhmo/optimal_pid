@@ -158,13 +158,13 @@ def obj_fun( pids ):
     kd_h = pids[5]
     kp_th = pids[6]
     kd_th = pids[7]
-    t_span, state_hist, ref_hist, uu_hist = sim.simulate(kp_z, ki_z, kd_z,
-                                                     kp_h, ki_h, kd_h,
-                                                     kp_th, kd_th)
+    state_hist, uu_hist = sim.simulate( kp_z, ki_z, kd_z,
+                                        kp_h, ki_h, kd_h,
+                                        kp_th, kd_th)
     #
-    target = np.array([[5+Param.z_step], [5+Param.h_step]])*(1 - np.exp(-t_span/Param.ref_tau))
-    # cost = np.linalg.norm(state_hist[:2,:] - ref_hist)
-    cost = np.linalg.norm(state_hist[:2,:] - target)
+    # target = np.array([[5+Param.z_step], [5+Param.h_step]])*(1 - np.exp(-Param.t_span/Param.ref_tau))
+    # cost = np.linalg.norm(state_hist[:2,:] - Param.ref_hist)
+    cost = np.linalg.norm(state_hist[:2,:] - Param.target)
     # print("PIDS: {}".format(pids))
     # print("Cost: {}".format(cost))
     return cost
