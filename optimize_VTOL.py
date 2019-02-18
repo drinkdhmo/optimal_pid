@@ -71,9 +71,9 @@ def motor_cnstr(pids):
     kd_h = pids[5]
     kp_th = pids[6]
     kd_th = pids[7]
-    t_span, state_hist, ref_hist, uu_hist = sim.simulate(kp_z, ki_z, kd_z,
-                                                         kp_h, ki_h, kd_h,
-                                                         kp_th, kd_th)
+    state_hist, uu_hist = sim.simulate(kp_z, ki_z, kd_z,
+                                       kp_h, ki_h, kd_h,
+                                       kp_th, kd_th)
     #
     motors = np.dot(Param.mixing, uu_hist)
     max_motor = np.max(motors, axis=1)

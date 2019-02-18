@@ -3,6 +3,7 @@ import autograd.numpy as np
 # import control as cnt
 
 
+from importlib import reload
 import signalGenerator
 reload(signalGenerator)
 from signalGenerator import signalGenerator
@@ -111,13 +112,13 @@ perf_kd_th = kd_th
 t_span = np.arange( t_start, t_end + Ts, Ts )
 n_steps = len(t_span)
 my_eye = np.eye(n_steps)
-target = np.array([[5+Param.z_step], [5+Param.h_step]])*(1 - np.exp(-Param.t_span/Param.ref_tau))
+target = np.array([[5+z_step], [5+h_step]])*(1 - np.exp(-t_span/ref_tau))
 
-z_reference = signalGenerator(amplitude=Param.z_step, frequency=0.02)
-h_reference = signalGenerator(amplitude=Param.h_step, frequency=0.03)
+z_reference = signalGenerator(amplitude=z_step, frequency=0.02)
+h_reference = signalGenerator(amplitude=h_step, frequency=0.03)
 
-z_ref_hist = 5.0 + z_reference.square_batch(Param.t_span)
-h_ref_hist = 5.0 + h_reference.square_batch(Param.t_span)
+z_ref_hist = 5.0 + z_reference.square_batch(t_span)
+h_ref_hist = 5.0 + h_reference.square_batch(t_span)
 ref_hist = np.vstack( (z_ref_hist, h_ref_hist) )
 
 
