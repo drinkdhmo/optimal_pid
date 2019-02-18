@@ -10,12 +10,18 @@ import VTOLParam as Param
 reload(vsim)
 reload(Param)
 
-kp_lb = Param.kp_z_up
-kp_ub = Param.kp_z_low
+kp_opted = -0.0509
+kd_opted = -0.0807
+
+# kp_delta = -0.0001
+# kd_delta =
+
+kp_lb = 4 * kp_opted  # Param.kp_z_up
+kp_ub = -0.0001 # Param.kp_z_low
 inc_kp = 100
 
-kd_lb = Param.kd_z_up
-kd_ub = Param.kd_z_low
+kd_lb = 4 * kd_opted # Param.kd_z_up
+kd_ub = -0.0001 # Param.kd_z_low
 inc_kd = 100
 
 kp_array = np.linspace(kp_lb, kp_ub+inc_kp, inc_kp)

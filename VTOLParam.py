@@ -32,7 +32,7 @@ target0 = 0
 # Simulation Parameters
 t_start = 0.0  # Start time of simulation
 t_end = 15.0  # End time of simulation
-Ts = 0.01  # sample time for simulation
+Ts = 0.02 # 0.01  # sample time for simulation
 t_plot = 0.1  # the plotting and animation is updated at this rate
 
 # saturation limits
@@ -100,14 +100,14 @@ kd_z   = (2.0*zeta_z*wn_z-a1)/b1
 # print('kp_th: ', kp_th)
 # print('kd_th: ', kd_th)
 
-perf_kp_z = kp_z
-perf_ki_z = ki_z
-perf_kd_z = kd_z
-perf_kp_h = kp_h
-perf_ki_h = ki_h
-perf_kd_h = kd_h
-perf_kp_th = kp_th
-perf_kd_th = kd_th
+# perf_kp_z = kp_z
+perf_ki_z = 0.00167443749 # ki_z
+# perf_kd_z = kd_z
+perf_kp_h = 1.08487657 # kp_h
+perf_ki_h = 0.280319924 # ki_h
+perf_kd_h = 1.55297213 # kd_h
+perf_kp_th = 3.84914829 # kp_th
+perf_kd_th = 0.596620813 # kd_th
 
 t_span = np.arange( t_start, t_end + Ts, Ts )
 n_steps = len(t_span)
