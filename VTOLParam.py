@@ -2,6 +2,11 @@
 import autograd.numpy as np
 # import control as cnt
 
+
+import signalGenerator
+reload(signalGenerator)
+from signalGenerator import signalGenerator
+
 # Physical parameters of the  VTOL known to the controller
 mc = 1.0  # kg
 mr = 0.25  # kg
@@ -93,6 +98,27 @@ kd_z   = (2.0*zeta_z*wn_z-a1)/b1
 # print('kd_h: ', kd_h)
 # print('kp_th: ', kp_th)
 # print('kd_th: ', kd_th)
+
+perf_kp_z = kp_z
+perf_ki_z = ki_z
+perf_kd_z = kd_z
+perf_kp_h = kp_h
+perf_ki_h = ki_h
+perf_kd_h = kd_h
+perf_kp_th = kp_th
+perf_kd_th = kd_th
+
+t_span = np.arange( t_start, t_end + Ts, Ts )
+n_steps = len(t_span)
+my_eye = np.eye(n_steps)
+target = np.array([[5+Param.z_step], [5+Param.h_step]])*(1 - np.exp(-Param.t_span/Param.ref_tau))
+
+z_reference = signalGenerator(amplitude=Param.z_step, frequency=0.02)
+h_reference = signalGenerator(amplitude=Param.h_step, frequency=0.03)
+
+z_ref_hist = 5.0 + z_reference.square_batch(Param.t_span)
+h_ref_hist = 5.0 + h_reference.square_batch(Param.t_span)
+ref_hist = np.vstack( (z_ref_hist, h_ref_hist) )
 
 
 # ======================================
