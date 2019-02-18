@@ -118,7 +118,7 @@ lb_zeta = nom_bount_zeta - pm_bound_zeta
 ub_zeta = nom_bount_zeta + pm_bound_zeta
 
 lb_motor = 1.0
-ub_motor = 12.0
+ub_motor = 15.0
 
 
 # gains for starting point for optimization
@@ -171,3 +171,13 @@ kd_th = .5
 # kd_h = 1.55233822e+00
 # kp_th = 2.57580208e+00
 # kd_th = 5.03389649e-01
+
+# optim w/ ref traj and ratio const
+# kp_z = -2.02984150e-02
+# ki_z = -1.73597797e-03
+# kd_z = -4.86434891e-02
+# kp_h = 8.38141915e-01
+# ki_h = 4.37927762e-01
+# kd_h = 1.36233681e+00
+# kp_th = 4.28637126e+00
+# kd_th = 6.58565983e-01
