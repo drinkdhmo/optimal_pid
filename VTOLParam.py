@@ -1,7 +1,5 @@
 # VTOL Parameter File
 import autograd.numpy as np
-# import control as cnt
-
 
 from importlib import reload
 import signalGenerator
@@ -100,9 +98,9 @@ kd_z   = (2.0*zeta_z*wn_z-a1)/b1
 # print('kp_th: ', kp_th)
 # print('kd_th: ', kd_th)
 
-# perf_kp_z = kp_z
+perf_kp_z = -0.0509283789 # kp_z
 perf_ki_z = 0.00167443749 # ki_z
-# perf_kd_z = kd_z
+perf_kd_z = -0.0807472303 # kd_z
 perf_kp_h = 1.08487657 # kp_h
 perf_ki_h = 0.280319924 # ki_h
 perf_kd_h = 1.55297213 # kd_h
@@ -167,6 +165,53 @@ kp_z_up   = wn_z_up**2.0/b1
 kp_z_low   = wn_z_low**2.0/b1
 kd_z_up   = (2.0*lb_zeta*wn_z_up-a1)/b1
 kd_z_low   = (2.0*ub_zeta*wn_z_low-a1)/b1
+
+
+
+
+def rt_lon(pids):
+    kp_h = pids[3]
+    tr_h = 2.2 * np.sqrt( (mc+2*mr) / kp_h )
+    return tr_h
+    #
+#
+def rt_lat(pids):
+    kp_z = pids[0]
+    tr_z = 2.2 / (-gravity * kp_z)**0.5
+    return tr_z
+    #
+#
+def rt_th(pids):
+    kp_th = pids[6]
+    tr_th = 2.2 * np.sqrt( (Jc+2.0*mr*arm**2) / kp_th )
+    return tr_th
+    #
+#
+def rt_ratio(pids):
+    return rt_lat(pids)/rt_th(pids)
+    #
+#
+def zeta_lon(pids):
+    kd_h = pids[5]
+    zeta_h = (kd_h / ( 4.4 * (mc + 2*mr))) * rt_lon(pids)
+    return zeta_h
+    #
+#
+def zeta_lat(pids):
+    kd_z = pids[2]
+    zeta_z = (( -gravity * kd_z + ((mu)/(mc + 2*mr)) )
+                    / 4.4) * rt_lat(pids)
+    return zeta_z
+    #
+#
+def zeta_th(pids):
+    kd_th = pids[7]
+    zeta_th = ( (kd_th / ( 4.4 * (Jc + 2 * mr * arm**2)))
+                * rt_th(pids) )
+    return zeta_th
+    #
+#
+
 
 # ======================================
 # Here are some gains produced from optimization

@@ -13,55 +13,6 @@ import VTOLSim as sim
 reload(Param)
 reload(sim)
 
-# kp_z = pids[0]
-# ki_z = pids[1]
-# kd_z = pids[2]
-# kp_h = pids[3]
-# ki_h = pids[4]
-# kd_h = pids[5]
-# kp_th = pids[6]
-# kd_th = pids[7]
-# set_trace()
-def rt_lon(pids):
-    kp_h = pids[3]
-    tr_h = 2.2 * np.sqrt( (Param.mc+2*Param.mr) / kp_h )
-    return tr_h
-    #
-#
-def rt_lat(pids):
-    kp_z = pids[0]
-    tr_z = 2.2 / (-Param.gravity * kp_z)**0.5
-    return tr_z
-    #
-#
-def rt_th(pids):
-    kp_th = pids[6]
-    tr_th = 2.2 * np.sqrt( (Param.Jc+2.0*Param.mr*Param.arm**2) / kp_th )
-    return tr_th
-    #
-#
-def rt_ratio(pids):
-    return rt_lat(pids)/rt_th(pids)
-    #
-#
-def zeta_lon(pids):
-    kd_h = pids[5]
-    zeta_h = (kd_h / ( 4.4 * (Param.mc + 2*Param.mr))) * rt_lon(pids)
-    return zeta_h
-    #
-#
-def zeta_lat(pids):
-    kd_z = pids[2]
-    zeta_z = (( -Param.gravity * kd_z + ((Param.mu)/(Param.mc + 2*Param.mr)) ) / 4.4) * rt_lat(pids)
-    return zeta_z
-    #
-#
-def zeta_th(pids):
-    kd_th = pids[7]
-    zeta_th = (kd_th / ( 4.4 * (Param.Jc + 2 * Param.mr * Param.arm**2))) * rt_th(pids)
-    return zeta_th
-    #
-#
 def motor_cnstr(pids):
     kp_z = pids[0]
     ki_z = pids[1]
@@ -106,35 +57,24 @@ def iteration_callback(xk, state):
 #
 # ======================================
 # ======================================
-# set_trace()
+
 nonlcon = []
-# nonlcon.append(scipy.optimize.NonlinearConstraint(rt_lon,
-#                                                   Param.lb_tr, Param.up_tr,
-#                                                   grad(rt_lon)))
-# #
-# nonlcon.append(scipy.optimize.NonlinearConstraint(rt_lat,
-#                                                   Param.lb_tr, Param.up_tr,
-#                                                   grad(rt_lat)))
-#
-# nonlcon.append(scipy.optimize.NonlinearConstraint(rt_th,
-#                                                   Param.lb_tr_in, Param.up_tr_in,
-#                                                   grad(rt_th)))
-# #
-nonlcon.append(scipy.optimize.NonlinearConstraint(rt_ratio,
+
+nonlcon.append(scipy.optimize.NonlinearConstraint(Param.rt_ratio,
                                                   Param.lb_tr_ratio, Param.ub_tr_ratio,
-                                                  grad(rt_ratio)))
+                                                  grad(Param.rt_ratio)))
 #
-nonlcon.append(scipy.optimize.NonlinearConstraint(zeta_lon,
+nonlcon.append(scipy.optimize.NonlinearConstraint(Param.zeta_lon,
                                                   Param.lb_zeta, Param.ub_zeta,
-                                                  grad(zeta_lon)))
+                                                  grad(Param.zeta_lon)))
 #
-nonlcon.append(scipy.optimize.NonlinearConstraint(zeta_lat,
+nonlcon.append(scipy.optimize.NonlinearConstraint(Param.zeta_lat,
                                                   Param.lb_zeta, Param.ub_zeta,
-                                                  grad(zeta_lat)))
+                                                  grad(Param.zeta_lat)))
 #
-nonlcon.append(scipy.optimize.NonlinearConstraint(zeta_th,
+nonlcon.append(scipy.optimize.NonlinearConstraint(Param.zeta_th,
                                                   Param.lb_zeta, Param.ub_zeta,
-                                                  grad(zeta_th)))
+                                                  grad(Param.zeta_th)))
 #
 # ======================================
 # constrain each motor thrust, theta,
@@ -162,13 +102,9 @@ def obj_fun( pids ):
                                         kp_h, ki_h, kd_h,
                                         kp_th, kd_th)
     #
-    # target = np.array([[5+Param.z_step], [5+Param.h_step]])*(1 - np.exp(-Param.t_span/Param.ref_tau))
-    # cost = np.linalg.norm(state_hist[:2,:] - Param.ref_hist)
     cost = np.linalg.norm(state_hist[:2,:] - Param.target)
-    # print("PIDS: {}".format(pids))
-    # print("Cost: {}".format(cost))
     return cost
-
+#
 # ======================================
 x0 = np.array([Param.kp_z, Param.ki_z, Param.kd_z,
                Param.kp_h, Param.ki_h, Param.kd_h,
