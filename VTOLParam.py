@@ -89,15 +89,6 @@ wn_z     = 2.2/tr_z
 kp_z   = wn_z**2.0/b1
 kd_z   = (2.0*zeta_z*wn_z-a1)/b1
 
-# print('kp_z: ', kp_z)
-# print('ki_z: ', ki_z)
-# print('kd_z: ', kd_z)
-# print('kp_h: ', kp_h)
-# print('ki_h: ', ki_h)
-# print('kd_h: ', kd_h)
-# print('kp_th: ', kp_th)
-# print('kd_th: ', kd_th)
-
 perf_kp_z = -0.0509283789 # kp_z
 perf_ki_z = 0.00167443749 # ki_z
 perf_kd_z = -0.0807472303 # kd_z
@@ -211,55 +202,3 @@ def zeta_th(pids):
     return zeta_th
     #
 #
-
-
-# ======================================
-# Here are some gains produced from optimization
-# kp_z = -0.08458252
-# ki_z = 0.00279188
-# kd_z = -0.097039864
-# kp_h = 0.81365614
-# ki_h = 0.49991785
-# kd_h = 1.55309333
-# kp_th = 2.64621446
-# kd_th = 0.50842781
-
-# another set
-# kp_z = -3.08925653e-02
-# ki_z = -2.31833170e-04
-# kd_z = -8.10501779e-02
-# kp_h = 4.53906692e-01
-# ki_h = 1.81925851e-01
-# kd_h = 1.33101872e+00
-# kp_th = 2.76221096e+00
-# kd_th = 4.75212000e-01
-
-# failed optimization from near zero gains
-# kp_z = -0.03692478
-# ki_z = -0.00841769
-# kd_z = -0.08019474
-# kp_h = 0.43178099
-# ki_h = -0.05492341
-# kd_h = 1.04734499
-# kp_th = 1.37671667
-# kd_th = 0.47537903
-
-# optimization with reference trajectory
-# kp_z = -3.31361911e-02
-# ki_z = 1.22433781e-03
-# kd_z = -7.50865036e-02
-# kp_h = 8.13247300e-01
-# ki_h = 4.99049275e-01
-# kd_h = 1.55233822e+00
-# kp_th = 2.57580208e+00
-# kd_th = 5.03389649e-01
-
-# optim w/ ref traj and ratio const
-# kp_z = -2.02984150e-02
-# ki_z = -1.73597797e-03
-# kd_z = -4.86434891e-02
-# kp_h = 8.38141915e-01
-# ki_h = 4.37927762e-01
-# kd_h = 1.36233681e+00
-# kp_th = 4.28637126e+00
-# kd_th = 6.58565983e-01
