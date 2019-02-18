@@ -158,6 +158,16 @@ kd_h = 1.
 kp_th = 4
 kd_th = .5
 
+
+# bounding values
+wn_z_up     = 2.2/lb_tr
+wn_z_low     = 2.2/up_tr
+
+kp_z_up   = wn_z_up**2.0/b1
+kp_z_low   = wn_z_low**2.0/b1
+kd_z_up   = (2.0*lb_zeta*wn_z_up-a1)/b1
+kd_z_low   = (2.0*ub_zeta*wn_z_low-a1)/b1
+
 # ======================================
 # Here are some gains produced from optimization
 # kp_z = -0.08458252
